@@ -88,16 +88,4 @@ public class Cliente {
 	public void setDocumento(String documento) {
 		this.documento = documento;
 	}
-	
-	
-	
-//	public Cliente(ClienteDTO1 clienteDTO) {
-//		this.cnpj = clienteDTO.getCnpj();
-//		this.cpf = clienteDTO.getCpf();
-//		this.email = clienteDTO.getEmail();
-//		this.telefone = clienteDTO.getTelefone();
-//		this.tipoPessoa = clienteDTO.getTipoPessoa();
-//		this.nome = clienteDTO.getNome();
-//		this.id = clienteDTO.getId();
-//	}
 }
