@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wmw.backend.integrador.dto.ClienteDTO;
+import com.wmw.backend.integrador.dto.SincronizacaoDataDTO;
 import com.wmw.backend.integrador.model.cliente.Cliente;
 import com.wmw.backend.integrador.service.ClienteService;
+import com.wmw.backend.integrador.utils.UtilCliente;
 
 import jakarta.validation.Valid;
 @RestController
@@ -43,7 +45,6 @@ public class ClienteController {
 	public ResponseEntity<ClienteDTO> cadastrarCliente(@RequestBody @Valid ClienteDTO clienteDTO) {
 			Cliente cliente = clienteService.cadastrarCliente(clienteDTO);
 			return ResponseEntity.ok(ClienteDTO.fromCliente(cliente));
-
 	}
 	
 	@PutMapping
@@ -60,6 +61,28 @@ public class ClienteController {
 		clienteService.excluirCliente(id);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
+	
+	@PostMapping("/sync/mobile")
+	public ResponseEntity sincronizarDadosMobile(@RequestBody SincronizacaoDataDTO sincronizacaoDataDTO) {
+		if(sincronizacaoDataDTO != null) {
+			clienteService.sincronizarClientesMobile(sincronizacaoDataDTO);
+			return ResponseEntity.ok().build();
+		}
+		
+		return ResponseEntity.badRequest().build();
+	}
+	
+	@GetMapping("/removidos")
+	public ResponseEntity listarClientesRemovidos() {
+		List<Cliente> clientesRemovidos = UtilCliente.getClientesDeletados();
+		
+		List<ClienteDTO> clientesRemovidosDTO = clientesRemovidos
+				.stream()
+				.map(ClienteDTO::fromCliente).toList();
+		UtilCliente.clearClientesDeletados();
+		return ResponseEntity.ok(clientesRemovidosDTO);
+	}
+	
 
 }
 
