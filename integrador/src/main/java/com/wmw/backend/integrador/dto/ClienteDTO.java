@@ -15,6 +15,22 @@ public record ClienteDTO(Long id, @NotNull String nome, @NotNull TipoPessoa tipo
             cliente.getDocumento(),
             cliente.getTelefone(),
             cliente.getEmail()
-        );
+        );	
     }
+    
+    public static Cliente fromClienteDTO(ClienteDTO clienteDTO) {
+    	return new Cliente(
+    			clienteDTO.id,
+    			clienteDTO.nome,
+    			clienteDTO.tipoPessoa,
+    			clienteDTO.documento,
+    			clienteDTO.telefone,
+    			clienteDTO.email);
+    }
+    
+    public ClienteDTO withId(Long id) {
+        return new ClienteDTO(id, nome, tipoPessoa, documento, telefone, email);
+    }
+    
+ 
 }
