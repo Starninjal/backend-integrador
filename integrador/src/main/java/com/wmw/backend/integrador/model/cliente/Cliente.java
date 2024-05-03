@@ -1,6 +1,8 @@
 package com.wmw.backend.integrador.model.cliente;
 
 
+import com.wmw.backend.integrador.dto.ClienteDTO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -39,6 +41,12 @@ public class Cliente {
 		this.telefone = telefone;
 		this.email = email;
 	}
+	
+	public Cliente(Long id, String nome, TipoPessoa tipoPessoa, String documento, String telefone, String email) {
+		this(nome, tipoPessoa, documento, telefone, email);
+		this.id = id;
+	}
+	
 	public Long getId() {
 		return id;
 	}
